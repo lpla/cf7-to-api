@@ -445,6 +445,11 @@ endif;
             } 
           }
 
+          // Apply the API response error code to the CF7 submission status
+          $response_code = wp_remote_retrieve_response_code($response);
+          $submission->set_status($response_code == 200 ? 'mail_sent' : 'mail_failed');
+
+
           do_action( 'qs_cf7_api_after_sent_to_api' , $record , $response );
         }
       }
